@@ -1,0 +1,25 @@
+﻿@model SuppliChain.Models.LoginModel;
+@{
+    ViewData["Title"] = "Login";
+    @* Layout = null; *@
+}
+
+<div class="text-center">
+
+
+    <h1 class="display-4">Login</h1>
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+    {
+        <label for="username">Username:</label>
+        <input type="text" name="username" placeholder="Username" />
+        <label for="password">Password:</label>
+        <input type="password" name="password" placeholder="Password" />
+        <button type="submit" name="action" value="Login">Login</button>
+        <button type="submit" name="action" value="Register">Register</button>
+    }
+    @if (Model != null && Model.ErrorName == "ERROR")
+    {
+        <h1 class="display-8" style="color:red">@Model.ErrorName</h1>
+        Model.ErrorName = "";
+    }
+</div>
