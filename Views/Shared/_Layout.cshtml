@@ -24,13 +24,12 @@
                         @if (ViewBag.HideLinks == null || !(bool)ViewBag.HideLinks)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="In">Receive
+                                    Inventory</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="In">In</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Out">Out</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Out">Dispatch
+                                    Inventory</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>

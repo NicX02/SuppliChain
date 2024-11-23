@@ -34,7 +34,11 @@ public class LoginController : Controller
         if (action == "Login")
         {
             if (username == "admin" && password == "admin")
+            {
+                HttpContext.Session.SetInt32("UserId", 456);//TODO user id
+                HttpContext.Session.SetString("UserName", username);
                 return RedirectToAction("Index", "Home");
+            }
         }
         else if (action == "Register")
         {

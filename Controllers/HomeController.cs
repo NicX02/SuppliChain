@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SuppliChain.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace SuppliChain.Controllers;
 
@@ -36,6 +37,15 @@ public class HomeController : Controller
     }
 
     public IActionResult Admin()
+    {
+        if (HttpContext.Session.GetInt32("UserId") == 123) //TODO database lookup
+        {
+            // is admin
+            return View();
+        }
+        return Redirect("PremissionDenied");
+    }
+    public IActionResult PremissionDenied()
     {
         return View();
     }
