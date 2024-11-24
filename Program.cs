@@ -1,4 +1,12 @@
+using SuppliChain.Data;
+using SuppliChain.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DatabaseContext");
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -8,8 +16,31 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+// nadomesti stari .AddDbContext
+builder.Services.AddDbContext<DatabaseContext>(options =>
+            options.UseSqlServer(connectionString));
+
+// builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
+//     .AddRoles<IdentityRole>()
+//     .AddEntityFrameworkStores<DatabaseContext>();
+
 var app = builder.Build();
 
+// Seed database using DbInitializer 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DatabaseContext>();
+
+    // // Drop the database
+    // context.Database.EnsureDeleted();
+
+    // // Recreate the database
+    // context.Database.EnsureCreated();
+
+    // Seed the database
+    DbInitializer.Initialize(context);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
