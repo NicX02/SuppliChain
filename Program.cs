@@ -2,6 +2,7 @@ using SuppliChain.Data;
 using SuppliChain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,18 +30,10 @@ var app = builder.Build();
 // Seed database using DbInitializer 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<DatabaseContext>();
-
-    // // Drop the database
-    // context.Database.EnsureDeleted();
-
-    // // Recreate the database
-    // context.Database.EnsureCreated();
-
-    // Seed the database
+    var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
     DbInitializer.Initialize(context);
 }
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
