@@ -28,7 +28,46 @@ public class DbInitializer
 
             context.SaveChanges();
         }
+
+        // // Seed Item Categories
+        // if (!context.ItemCategories.Any())
+        // {
+        //     context.ItemCategories.AddRange(
+        //         new ItemCategory { Name = "Electronics" },
+        //         new ItemCategory { Name = "Furniture" }
+        //     );
+        //     context.SaveChanges();
+        // }
+
+        // // Seed Items and Stock
+        // if (!context.Items.Any())
+        // {
+        //     var electronicsCategory = context.ItemCategories.First(c => c.Name == "Electronics");
+        //     var furnitureCategory = context.ItemCategories.First(c => c.Name == "Furniture");
+
+        //     var item1 = new Item
+        //     {
+        //         Name = "Laptop",
+        //         Description = "A high-end laptop",
+        //         Price = 1500.00m,
+        //         ItemCategoryId = electronicsCategory.Id,
+        //         Stock = new Stock { Quantity = 10 }
+        //     };
+
+        //     var item2 = new Item
+        //     {
+        //         Name = "Chair",
+        //         Description = "A comfortable chair",
+        //         Price = 200.00m,
+        //         ItemCategoryId = furnitureCategory.Id,
+        //         Stock = new Stock { Quantity = 50 }
+        //     };
+
+        //     context.Items.AddRange(item1, item2);
+        //     context.SaveChanges();
+        // }
     }
+}
 
     // Seed Users
     // if (context.Users?.Any() != true)

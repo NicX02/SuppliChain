@@ -9,10 +9,13 @@ public class Item
     public DateTime CreatedAt { get; set; }
 
     // Navigation Property for category
+    public int ItemCategoryId { get; set; }
+
     public ItemCategory? Category { get; set; }
 
     // Navigation Property for stock levels of this item
-    public ICollection<Stock>? Stock { get; set; }
+    public Stock Stock { get; set; }
+
 
     // Navigation Property for transactions involving this item
     public ICollection<Transaction>? Transactions { get; set; }
