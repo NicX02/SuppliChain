@@ -109,28 +109,3 @@ public class DbInitializer
 
     }
 }
-
-//     // Seed Transactions
-//     if (!context.Transactions.Any())
-//     {
-//         var transactions = new[]
-//         {
-//             new Transaction
-//             {
-//                 ItemId = 1, UserId = 1, Quantity = 2, Type = "add", Timestamp = DateTime.Now, Remarks = "Initial stock entry"
-//             },
-//             new Transaction
-//             {
-//                 ItemId = 2, UserId = 1, Quantity = 5, Type = "add", Timestamp = DateTime.Now, Remarks = "Initial stock entry"
-//             },
-//             new Transaction
-//             {
-//                 ItemId = 3, UserId = 2, Quantity = 10, Type = "remove", Timestamp = DateTime.Now, Remarks = "Office use"
-//             },
-//         };
-
-//         context.Transactions.AddRange(transactions);
-//         context.SaveChanges();
-//     }
-// }
-// }
