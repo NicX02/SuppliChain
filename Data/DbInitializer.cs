@@ -21,13 +21,14 @@ public class DbInitializer
         context.Database.ExecuteSqlRaw("DELETE FROM ItemCategories");// todo remove
         // Seed initial data
 
-        //seed user
+        //seed admin user
         if (!context.Users.Any())
         {
             context.Users.Add(new User
             {
                 Name = "admin",
                 Password = BCrypt.Net.BCrypt.HashPassword("admin"),
+                Email = "admin@admin.com",
                 Role = "admin",
                 CreatedAt = DateTime.UtcNow
             });

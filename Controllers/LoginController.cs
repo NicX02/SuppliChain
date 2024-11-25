@@ -22,6 +22,12 @@ public class LoginController : Controller
         return View();
     }
 
+    public IActionResult Register()
+    {
+        ViewBag.HideLinks = true;
+        return View();
+    }
+
     [HttpPost]
     public async Task<ActionResult> Login(string username, string password, string action)
     {
@@ -39,7 +45,7 @@ public class LoginController : Controller
         else if (action == "Register")
         {
             // if (username == "admin" && password == "admin")
-            return RedirectToAction("Privacy", "Home");
+            return RedirectToAction("Register", "Login");
         }
 
         LoginModel lrm = new()
@@ -48,31 +54,25 @@ public class LoginController : Controller
         };
         ViewBag.HideLinks = true;
         return View(lrm);
-        // return Unauthorized(new { Message = "Invalid username or password" });
-
-        //     if (action == "Login")
-        //     {
-
-
-        //         if (username == "admin" && password == "admin")
-        //         {
-        //             HttpContext.Session.SetInt32("UserId", 456);//TODO user id
-        //             HttpContext.Session.SetString("UserName", username);
-        //             return RedirectToAction("Index", "Home");
-        //         }
-        //     }
-        //     else if (action == "Register")
-        //     {
-        //         if (username == "admin" && password == "admin")
-        //             return RedirectToAction("Privacy", "Home");
-        //     }
-        //     LoginModel lrm = new()
-        //     {
-        //         ErrorName = "ERROR"
-        //     };
-        //     ViewBag.HideLinks = true;
-        //     return View(lrm);
     }
+
+    public async Task<ActionResult> RegisterCall(string email, string username, string password, string action)
+    {
+        if (email == null || username == null || password == null || email.Length == 0 || username.Length == 0 || password.Length == 0)
+        {
+            LoginModel lrm = new()
+            {
+                ErrorName = "ERROR"
+            };
+            ViewBag.HideLinks = true;
+            return View("Register", lrm);
+        }
+        var user = new User { Email = email, Name = username, Password = BCrypt.Net.BCrypt.HashPassword(password), Role = "user" };
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Login", "Login");
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
