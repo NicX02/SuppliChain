@@ -6,7 +6,7 @@ using SuppliChain.Models;
 
 namespace SuppliChain.Controllers;
 
-public class LoginController : Controller
+public class LoginController : BaseController
 {
     private readonly ILogger<LoginController> _logger;
     private readonly DatabaseContext _context;
@@ -41,6 +41,10 @@ public class LoginController : Controller
                     return RedirectToAction("Login", "Login");
                 HttpContext.Session.SetInt32("UserId", user.UserId);
                 HttpContext.Session.SetString("UserName", username);
+                if (user.Role == "admin")
+                    HttpContext.Session.SetString("IsAdmin", "true");
+                else
+                    HttpContext.Session.SetString("IsAdmin", "false");
                 return RedirectToAction("Index", "Home");
                 // return Ok(new { Message = "Login successful" });
             }

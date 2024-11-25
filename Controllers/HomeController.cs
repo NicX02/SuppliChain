@@ -2,15 +2,18 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SuppliChain.Models;
 using Microsoft.AspNetCore.Http;
+using SuppliChain.Data;
 
 namespace SuppliChain.Controllers;
 
-public class HomeController : Controller
+public class HomeController : BaseController
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly DatabaseContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(DatabaseContext context, ILogger<HomeController> logger)
     {
+        _context = context;
         _logger = logger;
     }
 
@@ -38,7 +41,8 @@ public class HomeController : Controller
 
     public IActionResult Admin()
     {
-        if (HttpContext.Session.GetInt32("UserId") == 123) //TODO database lookup
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId.HasValue && _context.Users.Single(u => u.UserId == userId.Value).Role == "admin")
         {
             // is admin
             return View();
