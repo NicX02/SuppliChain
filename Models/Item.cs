@@ -5,7 +5,7 @@ public class Item
     public int ItemId { get; set; } // Primary Key
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public int CategoryId { get; set; } // Foreign Key referencing ItemCategory
+    public decimal Price { get; set; }
     public DateTime CreatedAt { get; set; }
 
     // Navigation Property for category

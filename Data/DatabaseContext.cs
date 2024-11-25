@@ -46,14 +46,25 @@ public class DatabaseContext : DbContext
             .WithOne(i => i.Stock)
             .HasForeignKey<Stock>(s => s.ItemId);
 
-        modelBuilder.Entity<Transaction>()
-            .HasOne(t => t.Item)
-            .WithMany()
-            .HasForeignKey(t => t.ItemId);
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.HasKey(t => t.TransactionId); // Primary Key
+            entity.Property(t => t.Timestamp).IsRequired();
+            entity.Property(t => t.Quantity).IsRequired();
+            entity.Property(t => t.Type).IsRequired().HasMaxLength(50);
+            entity.Property(t => t.Remarks).HasMaxLength(255);
 
-        modelBuilder.Entity<Transaction>()
-            .HasOne(t => t.User)
-            .WithMany()
-            .HasForeignKey(t => t.UserId);
+            // Foreign Key for ItemId
+            entity.HasOne<Item>()
+                  .WithMany() // No navigation property in Item
+                  .HasForeignKey(t => t.ItemId)
+                  .OnDelete(DeleteBehavior.Restrict); // Adjust delete behavior as needed
+
+            // Foreign Key for UserId
+            entity.HasOne<User>()
+                  .WithMany() // No navigation property in User
+                  .HasForeignKey(t => t.UserId)
+                  .OnDelete(DeleteBehavior.Restrict); // Adjust delete behavior as needed
+        });
     }
 }

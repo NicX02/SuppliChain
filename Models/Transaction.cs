@@ -10,9 +10,4 @@ public class Transaction
     public DateTime Timestamp { get; set; }
     public string? Remarks { get; set; } // Optional notes
 
-    // Navigation Property for user
-    public User? User { get; set; }
-
-    // Navigation Property for item
-    public Item? Item { get; set; }
 }
