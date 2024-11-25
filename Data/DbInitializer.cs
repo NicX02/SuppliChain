@@ -14,7 +14,11 @@ public class DbInitializer
     {
         // Recreate the database
         context.Database.EnsureCreated();
-        context.Database.ExecuteSqlRaw("DELETE FROM Users WHERE Role = 'admin';");// todo remove
+        context.Database.ExecuteSqlRaw("DELETE FROM Transactions");// todo remove
+        context.Database.ExecuteSqlRaw("DELETE FROM Users");// todo remove
+        context.Database.ExecuteSqlRaw("DELETE FROM Stocks");// todo remove
+        context.Database.ExecuteSqlRaw("DELETE FROM Items");// todo remove
+        context.Database.ExecuteSqlRaw("DELETE FROM ItemCategories");// todo remove
         // Seed initial data
 
         //seed user
