@@ -36,7 +36,10 @@ public class LoginController : Controller
             bool isAuthenticated = await AuthenticateUser(username, password);
             if (isAuthenticated)
             {
-                HttpContext.Session.SetInt32("UserId", 456);//TODO user id
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == username);
+                if (user == null)
+                    return RedirectToAction("Login", "Login");
+                HttpContext.Session.SetInt32("UserId", user.UserId);
                 HttpContext.Session.SetString("UserName", username);
                 return RedirectToAction("Index", "Home");
                 // return Ok(new { Message = "Login successful" });
@@ -63,6 +66,18 @@ public class LoginController : Controller
             LoginModel lrm = new()
             {
                 ErrorName = "ERROR"
+            };
+            ViewBag.HideLinks = true;
+            return View("Register", lrm);
+        }
+        var existingUser = await _context.Users
+            .FirstOrDefaultAsync(u => u.Name == username || u.Email == email);
+
+        if (existingUser != null)
+        {
+            LoginModel lrm = new()
+            {
+                ErrorName = "ERROR: Username or Email already exists"
             };
             ViewBag.HideLinks = true;
             return View("Register", lrm);
