@@ -47,9 +47,8 @@
                     </ul>
                     @if (ViewBag.HideLinks == null || !(bool)ViewBag.HideLinks)
                     {
-                        <span class="navbar-text text-light">
-                            Logged in as: @ViewBag.UserName
-                        </span>
+                        <span class="nav-link text-light" style="cursor: default;">Logged in as: @ViewBag.UserName</span>
+                        <a class="nav-link text-light" asp-controller="Login" asp-action="Logout">Logout</a>
                     }
                 </div>
             </div>
