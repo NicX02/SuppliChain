@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4" style="padding-bottom: 20px;">Dispatch Inventory</h1>
+    <h1 class="display-4" style="padding-bottom: 20px;">Add a new item to the database</h1>
     @if (ViewBag.Message != null)
     {
         <div class="alert alert-info">
@@ -11,7 +11,7 @@
         </div>
         ViewBag.Message = "";
     }
-    <div class="container-fluid">
+    @* <div class="container-fluid">
         <div class="row">
             <div class="col-4">
                 @using (Html.BeginForm("RemoveItemFromDB", "Home", FormMethod.Post))
@@ -23,7 +23,7 @@
                     <label for="numToRemove">Number to Remove</label>
                     <input type="number" class="form-control text-center" id="numToRemove"
                         aria-describedby="numToRemoveHelp" placeholder="Enter number to Remove" name="Count">
-                    <button type="submit" class="btn btn-primary" style="margin: 5px;">Remove</button>
+                    <button type="submit" class="btn btn-primary" style="margin: 5px;">Add</button>
                 }
             </div>
             <div class="col-8" style="height: 65vh; overflow-y: auto; padding-top: 23px;">
@@ -61,4 +61,4 @@
             });
         });
     </script>
-</div>
+</div> *@

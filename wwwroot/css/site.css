@@ -24,3 +24,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5bc0de;
+}

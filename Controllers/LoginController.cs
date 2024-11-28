@@ -57,7 +57,7 @@ public class LoginController : BaseController
 
         LoginModel lrm = new()
         {
-            ErrorName = "ERROR"
+            ErrorName = "Invalid username or password"
         };
         ViewBag.HideLinks = true;
         return View(lrm);
@@ -69,7 +69,7 @@ public class LoginController : BaseController
         {
             LoginModel lrm = new()
             {
-                ErrorName = "ERROR"
+                ErrorName = "Invalid username or password"
             };
             ViewBag.HideLinks = true;
             return View("Register", lrm);

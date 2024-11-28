@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-slate.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SuppliChain.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 
 <body class="bg-primary">
@@ -31,6 +32,10 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Out">Dispatch
                                     Inventory</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="NewItem">New
+                                    Item</a>
                             </li>
                             @if (ViewBag.IsAdmin == true)
                             {
