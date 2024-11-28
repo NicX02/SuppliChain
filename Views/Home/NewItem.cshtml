@@ -44,7 +44,7 @@
                         <tr>
                             <th scope="col">Item Name</th>
                             <th scope="col">Item ID</th>
-                            <th scope="col">Num Count</th>
+                            <th scope="col">Category</th>
                         </tr>
                     </thead>
                     <tbody id="itemList">
@@ -63,13 +63,14 @@
         $(document).ready(function ()
         {
             $.ajax({
-                url: '/Home/GetInDB',
+                url: '/Home/GetInDBnewItem',
                 method: 'POST',
                 success: function (data)
                 {
                     data.forEach(function (item)
                     {
-                        $('#itemList').append('<tr><td>' + item.itemName + '</td><td>' + item.itemId + '</td><td>' + item.count + '</td></tr>');
+        @* console.log(item); *@
+                            $('#itemList').append('<tr><td>' + item.itemName + '</td><td>' + item.itemId + '</td><td>' + item.category + '</td></tr>');
                     });
                 }
             });

@@ -32,7 +32,7 @@
                         <tr>
                             <th scope="col">Item Name</th>
                             <th scope="col">Item ID</th>
-                            <th scope="col">Num Count</th>
+                            <th scope="col">Stock</th>
                         </tr>
                     </thead>
                     <tbody id="itemList">
@@ -51,7 +51,6 @@
                 method: 'POST',
                 success: function (data)
                 {
-                    console.log(data);
                     data.forEach(function (item)
                     {
                         // Append each item to the table with id 'itemList'

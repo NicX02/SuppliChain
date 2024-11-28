@@ -83,6 +83,23 @@ public class HomeController : BaseController
             .ToArray();
         return Json(items);
     }
+    public JsonResult GetInDBnewItem()
+    {
+        var items = _context.Stocks
+               .Join(_context.Items,
+                   stock => stock.ItemId,
+                   item => item.ItemId,
+                   (stock, item) => new
+                   {
+                       ItemId = item.ItemId,
+                       ItemName = item.Name,
+                       Count = stock.Quantity,
+                       category = _context.ItemCategories.FirstOrDefault(ic => ic.CategoryId == item.ItemCategoryId).Name
+                   })
+               .ToArray();
+        return Json(items);
+    }
+
 
     [HttpPost]
     public JsonResult GetCategories()
