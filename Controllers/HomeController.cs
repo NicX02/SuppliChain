@@ -84,6 +84,17 @@ public class HomeController : BaseController
         return Json(items);
     }
 
+    [HttpPost]
+    public JsonResult GetCategories()
+    {
+        var categories = _context.ItemCategories
+            .Select(ic => ic.Name)
+            .ToArray();
+        return Json(categories);
+    }
+
+
+
     public IActionResult AddItemToDB(int itmID, int Count)
     {
 
@@ -101,7 +112,6 @@ public class HomeController : BaseController
         }
         else
         {
-            // Stock = new Stock { Quantity = 10 }
             var stock = _context.Stocks
                 .FirstOrDefault(s => s.ItemId == itmID);
 
@@ -137,7 +147,6 @@ public class HomeController : BaseController
         }
         else
         {
-            // Stock = new Stock { Quantity = 10 }
             var stock = _context.Stocks
                 .FirstOrDefault(s => s.ItemId == itmID);
             if (stock != null)
@@ -157,6 +166,28 @@ public class HomeController : BaseController
         }
         _context.SaveChanges();
         return RedirectToAction("Out");
+    }
+
+    public IActionResult AddNewItemToDB(string name, string description, decimal price, string categoryName)
+    {
+        var category = _context.ItemCategories
+            .FirstOrDefault(c => c.Name == categoryName);
+
+        if (category == null)
+        {
+            ViewBag.Message = $"Category '{categoryName}' does not exist.";
+            return View("NewItem");
+        }
+        if (name == null || name == "" || description == null || description == "" || price < 1)
+        {
+            ViewBag.Message = $"Input data is invalid.";
+            return View("NewItem");
+        }
+
+        var categoryID = category.CategoryId;
+        _context.Items.Add(new Item { Name = name, Description = description, Price = price, ItemCategoryId = categoryID, Stock = new Stock { Quantity = 0 } });
+        _context.SaveChanges();
+        return View("NewItem");
     }
 
 

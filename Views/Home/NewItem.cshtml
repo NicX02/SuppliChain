@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4" style="padding-bottom: 20px;">Add a new item to the database</h1>
+    <h1 class="display-4" style="padding-bottom: 20px;">Add Item to DB</h1>
     @if (ViewBag.Message != null)
     {
         <div class="alert alert-info">
@@ -11,19 +11,31 @@
         </div>
         ViewBag.Message = "";
     }
-    @* <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-4">
-                @using (Html.BeginForm("RemoveItemFromDB", "Home", FormMethod.Post))
+                @using (Html.BeginForm("AddNewItemToDB", "Home", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
-                    <label for="itemId">Item ID</label>
-                    <input type="number" class="form-control text-center" id="itemId" aria-describedby="itemIdHelp"
-                        placeholder="Enter item ID" name="itmID">
-                    <label for="numToRemove">Number to Remove</label>
-                    <input type="number" class="form-control text-center" id="numToRemove"
-                        aria-describedby="numToRemoveHelp" placeholder="Enter number to Remove" name="Count">
-                    <button type="submit" class="btn btn-primary" style="margin: 5px;">Add</button>
+                    <label for="itemName">Item Name</label>
+                    <input type="text" class="form-control text-center" id="itemName" placeholder="Enter item Name" using
+                        Microsoft.CodeAnalysis.Scripting; using Microsoft.CodeAnalysis.Scripting; name="name">
+
+                    <label for="itemDesc">Item Description</label>
+                    <input type="text" class="form-control text-center" id="itemDesc" placeholder="Enter item Description"
+                        name="description">
+
+                    <label for="itemPrice">Item Price</label>
+                    <input type="decimal" class="form-control text-center" id="itemPrice" placeholder="Enter item Price"
+                        name="price">
+
+                    <label for="categoryDropdown">Select a Category:</label>
+                    @Html.DropDownList(
+                             "categoryName",
+                             Enumerable.Empty<SelectListItem>(),
+                             "Select a Category",
+                             new { id = "categoryDropdown", @class = "form-control" })
+                    <button type="submit" class="btn btn-primary" style="margin: 5px;">Add Item</button>
                 }
             </div>
             <div class="col-8" style="height: 65vh; overflow-y: auto; padding-top: 23px;">
@@ -43,22 +55,42 @@
     </div>
 
     <script>
+        $('#categoryDropdown').on('click', 'li a', function ()
+        {
+            $('#category').text($(this).text());
+        });
+
         $(document).ready(function ()
         {
-
             $.ajax({
                 url: '/Home/GetInDB',
                 method: 'POST',
                 success: function (data)
                 {
-                    console.log(data);
                     data.forEach(function (item)
                     {
-                        // Append each item to the table with id 'itemList'
                         $('#itemList').append('<tr><td>' + item.itemName + '</td><td>' + item.itemId + '</td><td>' + item.count + '</td></tr>');
                     });
                 }
             });
+            $.ajax({
+                url: '/Home/GetCategories',
+                method: 'POST',
+                success: function (data)
+                {
+                    const dropdown = $('#categoryDropdown');
+                    dropdown.empty();
+                    dropdown.append('<option class="text-center" value="">Select a Category</option>');
+                    data.forEach(function (item)
+                    {
+                        dropdown.append('<option class="text-center" value="' + item + '">' + item + '</option>');
+                    });
+                },
+                error: function ()
+                {
+                    alert('Failed to load categories. Please try again.');
+                }
+            });
         });
     </script>
-</div> *@
+</div>
