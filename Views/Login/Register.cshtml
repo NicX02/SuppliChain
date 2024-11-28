@@ -8,19 +8,24 @@
 
 
     <h1 class="display-4">Register</h1>
+
+    @if (Model != null && Model.ErrorName != "")
+    {
+            <div class="alert alert-info mx-auto" style="width: 35vw">
+            @Model.ErrorName
+            </div>
+        Model.ErrorName = "";
+    }
     @using (Html.BeginForm("RegisterCall", "Login", FormMethod.Post))
     {
-        <label for="email">Email:</label>
-        <input type="text" name="email" placeholder="Email" />
-        <label for="username">Username:</label>
-        <input type="text" name="username" placeholder="Username" />
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit" name="action" value="Register">Register</button>
-    }
-    @if (Model != null && Model.ErrorName == "ERROR")
-    {
-        <h1 class="display-8" style="color:red">@Model.ErrorName</h1>
-        Model.ErrorName = "";
+            <label for="email">Email:</label>
+            <input class="form-control text-center mx-auto" style="width: 35vw" type="email" name="email" placeholder="Email" />
+            <label for="username">Username:</label>
+            <input class="form-control text-center mx-auto" style="width: 35vw" type="text" name="username"
+                placeholder="Username" />
+            <label for="password">Password:</label>
+            <input class="form-control text-center mx-auto" style="width: 35vw" type="password" name="password"
+                placeholder="Password" />
+            <button class="btn btn-primary" style="margin: 5px;" type="submit" name="action" value="Register">Register</button>
     }
 </div>

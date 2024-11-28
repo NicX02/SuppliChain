@@ -25,7 +25,7 @@ public class BaseController : Controller
         if (loginToken == -1)
         {
             var path = context.HttpContext.Request.Path;
-            if (path != "/" && path != "/Login/Register")
+            if (path != "/" && path != "/Login/Register" && path != "/Login/RegisterCall")
                 context.Result = Redirect("/");
         }
     }

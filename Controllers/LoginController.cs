@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SuppliChain.Data;
 using SuppliChain.Models;
+using System.Net.Mail;
 
 namespace SuppliChain.Controllers;
 
@@ -73,15 +74,40 @@ public class LoginController : BaseController
 
     public async Task<ActionResult> RegisterCall(string email, string username, string password, string action)
     {
+        bool EmailValidate(string mail)
+        {
+            try
+            {
+                var addr = new MailAddress(mail);
+                bool result = addr.Address == mail;
+                return result;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         if (email == null || username == null || password == null || email.Length == 0 || username.Length == 0 || password.Length == 0)
         {
             LoginModel lrm = new()
             {
-                ErrorName = "Invalid username or password"
+                ErrorName = "ERROR: Invalid input data"
             };
             ViewBag.HideLinks = true;
             return View("Register", lrm);
         }
+        if (!EmailValidate(email))
+        {
+            LoginModel lrm = new()
+            {
+                ErrorName = "ERROR: Invalid Email"
+            };
+            ViewBag.HideLinks = true;
+            return View("Register", lrm);
+        }
+
         var existingUser = await _context.Users
             .FirstOrDefaultAsync(u => u.Name == username || u.Email == email);
 

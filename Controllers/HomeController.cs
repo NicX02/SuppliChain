@@ -43,6 +43,11 @@ public class HomeController : BaseController
     {
         return View();
     }
+    public IActionResult NewCategory()
+    {
+        return View();
+    }
+
 
     public IActionResult Admin()
     {
@@ -109,6 +114,49 @@ public class HomeController : BaseController
             .Select(ic => ic.Name)
             .ToArray();
         return Json(categories);
+    }
+
+    [HttpPost]
+    public JsonResult GetFullCategories()
+    {
+        var categories = _context.ItemCategories
+            .ToArray();
+        return Json(categories);
+    }
+
+
+    [HttpPost]
+    public JsonResult GetAdminItems()
+    {
+        var items = _context.Stocks
+            .Join(_context.Items,
+                stock => stock.ItemId,
+                item => item.ItemId,
+                (stock, item) => new
+                {
+                    id = item.ItemId,
+                    name = item.Name,
+                    descripton = item.Description,
+                    category = _context.ItemCategories.FirstOrDefault(ic => ic.CategoryId == item.ItemCategoryId).Name,
+                    price = item.Price,
+                    stock = stock.Quantity
+                })
+            .ToArray();
+        return Json(items);
+    }
+    [HttpPost]
+    public JsonResult GetAdminUsers()
+    {
+        var items = _context.Users
+            .Select(u => new
+            {
+                id = u.UserId,
+                name = u.Name,
+                role = u.Role,
+                email = u.Email
+            })
+            .ToArray();
+        return Json(items);
     }
 
 
@@ -185,7 +233,6 @@ public class HomeController : BaseController
         _context.SaveChanges();
         return RedirectToAction("Out");
     }
-
     public IActionResult AddNewItemToDB(string name, string description, decimal price, string categoryName)
     {
         var category = _context.ItemCategories
@@ -207,6 +254,27 @@ public class HomeController : BaseController
         _context.SaveChanges();
         return View("NewItem");
     }
+    public IActionResult AddNewCategoryToDB(string name, string description)
+    {
+        if (name == null || name == "" || description == null || description == "")
+        {
+            ViewBag.Message = $"Input data is invalid.";
+            return View("NewCategory");
+        }
 
+
+        var existingCategory = _context.ItemCategories
+            .FirstOrDefault(c => c.Name == name);
+
+        if (existingCategory != null)
+        {
+            ViewBag.Message = $"Category '{name}' already exists in the database.";
+            return View("NewCategory");
+        }
+
+        _context.ItemCategories.Add(new ItemCategory { Name = name, Description = description });
+        _context.SaveChanges();
+        return View("NewCategory");
+    }
 
 }

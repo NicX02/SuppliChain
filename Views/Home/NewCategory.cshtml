@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "New Category";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="padding-bottom: 20px;">Add a Category to the DB</h1>
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info">
+            @ViewBag.Message
+        </div>
+        ViewBag.Message = "";
+    }
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                @using (Html.BeginForm("AddNewCategoryToDB", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <label for="catName">Item Name</label>
+                    <input type="text" class="form-control text-center" id="catName" placeholder="Enter Category Name" using
+                        Microsoft.CodeAnalysis.Scripting; using Microsoft.CodeAnalysis.Scripting; name="name">
+
+                    <label for="catDesc">Item Description</label>
+                    <input type="text" class="form-control text-center" id="catDesc"
+                        placeholder="Enter Category Description" name="description">
+
+                    <button type="submit" class="btn btn-primary" style="margin: 5px;">Add Item</button>
+                }
+            </div>
+            <div class="col-8" style="height: 65vh; overflow-y: auto; padding-top: 23px;">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Category ID</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Category Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemList">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function ()
+        {
+            $.ajax({
+                url: '/Home/GetFullCategories',
+                method: 'POST',
+                success: function (data)
+                {
+                    data.forEach(function (item)
+                    {
+                        $('#itemList').append('<tr><td>' + item.categoryId + '</td><td>' + item.name + '</td><td>' + item.description + '</td></tr>');
+                    });
+                }
+            });
+        });
+    </script>
+</div>

@@ -37,6 +37,11 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="NewItem">New
                                     Item</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home"
+                                    asp-action="NewCategory">New
+                                    Category</a>
+                            </li>
                             @if (ViewBag.IsAdmin == true)
                             {
                                 <li class="nav-item">
@@ -53,7 +58,8 @@
                     @if (ViewBag.HideLinks == null || !(bool)ViewBag.HideLinks)
                     {
                         <span class="nav-link text-light" style="cursor: default;">Logged in as: @ViewBag.UserName</span>
-                        <a class="nav-link text-light" asp-controller="Login" asp-action="Logout" onclick="Logout()">Logout</a>
+                        <a class="nav-link text-light" asp-controller="Login" asp-action="Logout"
+                            onclick="Logout()">Logout</a>
                     }
                 </div>
             </div>
