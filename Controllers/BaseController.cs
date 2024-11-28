@@ -15,9 +15,18 @@ public class BaseController : Controller
 
         string userName = HttpContext.Session.GetString("UserName");
         bool isAdmin = HttpContext.Session.GetString("IsAdmin") == "true";
+        int loginToken = HttpContext.Session.GetInt32("UserId") ?? -1;
 
 
         ViewBag.UserName = userName;
         ViewBag.IsAdmin = isAdmin;
+        ViewBag.LoginToken = loginToken;
+
+        if (loginToken == -1)
+        {
+            var path = context.HttpContext.Request.Path;
+            if (path != "/" && path != "/Login/Register")
+                context.Result = Redirect("/");
+        }
     }
 }

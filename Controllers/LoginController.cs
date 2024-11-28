@@ -63,6 +63,14 @@ public class LoginController : BaseController
         return View(lrm);
     }
 
+    public IActionResult Logout()
+    {
+        HttpContext.Session.SetInt32("UserId", -1);
+        HttpContext.Session.SetString("UserName", "");
+        return Redirect("/");
+    }
+
+
     public async Task<ActionResult> RegisterCall(string email, string username, string password, string action)
     {
         if (email == null || username == null || password == null || email.Length == 0 || username.Length == 0 || password.Length == 0)
